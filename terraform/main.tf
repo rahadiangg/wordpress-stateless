@@ -245,7 +245,7 @@ resource "google_compute_instance_template" "template" {
     source_image = module.gce-container.source_image
   }
 
-  machine_type = "f1-micro"
+  machine_type = "g1-small"
 
   network_interface {
     subnetwork = module.vpc.subnets_names[0] // ini karena subnetworknya custom, jakarta
