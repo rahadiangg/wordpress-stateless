@@ -5,7 +5,7 @@ Ini merupakan project untuk menyelesaikan *challenge* membuat wordpress menjadi 
 <br>
 <br>
 > Dokumentasi
-> - [Penjelasan desain infra](/catatan/penjelasan_desain.md)
+> - [Penjelasan desain infra (GCP)](/catatan/penjelasan_desain.md)
 
 <br>
 <br>
