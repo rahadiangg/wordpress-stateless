@@ -1,14 +1,11 @@
 
 # Wordpress Stateless
 
-![Desain Infra](/catatan/Infra.jpg)
-
 Ini merupakan project untuk menyelesaikan *challenge* membuat wordpress menjadi *stateless* agar bisa mengimplementasikan *High Availability*. Saat ini wordpress saya kemas menjadi sebuah *docker image* berserta *dependency* yang dibutuhkan. Saya juga menyediakan file `terraform` untuk keperluan *deployment* ke GCP
 <br>
 <br>
 > Dokumentasi
-> - [Penjelasan Desain](/catatan/penjelasan_desain.md)
-> - [Deploy ke GCP dengan terraform](/catatan/deploy_gcp.md)
+> - [Penjelasan desain infra](/catatan/penjelasan_desain.md)
 
 <br>
 <br>
