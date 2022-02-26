@@ -252,4 +252,66 @@ resource "google_compute_instance_template" "template" {
     access_config {
     }
   }
+    service_account {
+      scopes = [
+        "userinfo-email",
+        "cloud-platform"
+      ]
+  }
+}
+
+// Buat health check
+resource "google_compute_health_check" "autohealing" {
+  name                = "autohealing-health-check"
+  check_interval_sec  = 10
+  timeout_sec         = 5
+  healthy_threshold   = 2
+  unhealthy_threshold = 3
+
+  http_health_check {
+    request_path = "/"
+    port         = 80
+  }
+}
+
+
+# // Buat instance group & autoscale regional
+resource "google_compute_region_instance_group_manager" "app" {
+  name = "ig-${var.project_name}"
+
+  base_instance_name         = var.project_name
+  region                     = var.region
+  distribution_policy_zones  = ["${var.region}-a", "${var.region}-b", "${var.region}-c"]
+
+  version {
+    instance_template = google_compute_instance_template.template.self_link
+  }
+
+  target_pools = []
+  target_size  = 1 // minimal running
+
+  named_port {
+    name = "http"
+    port = 80
+  }
+
+  auto_healing_policies {
+    health_check      = google_compute_health_check.autohealing.self_link
+    initial_delay_sec = 300
+  }
+}
+
+resource "google_compute_region_autoscaler" "autoscaler" {
+  name   = "${var.project_name}-autoscaler"
+  target = google_compute_region_instance_group_manager.app.id
+
+  autoscaling_policy {
+    max_replicas    = 2
+    min_replicas    = 1
+    cooldown_period = 60
+
+    cpu_utilization {
+      target = 0.7
+    }
+  }
 }
