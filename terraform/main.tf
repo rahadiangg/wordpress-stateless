@@ -145,6 +145,7 @@ resource "google_sql_database_instance" "master" {
   name = "master-${var.project_name}-${random_id.suffix.hex}"
   region = var.region
   database_version = "MYSQL_8_0"
+  deletion_protection  = false
 
   settings {
     tier = "db-f1-micro"
